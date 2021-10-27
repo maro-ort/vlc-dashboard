@@ -1,13 +1,13 @@
 import React, { FC } from 'react'
 import Layout from './Layout'
 
-import { VlcProvider } from './VlcContext'
+import ProvidersWrapper from './context/ProvidersWrapper'
 
 const App: FC = () => {
   return (
-    <VlcProvider>
+    <ProvidersWrapper>
       <Layout />
-    </VlcProvider>
+    </ProvidersWrapper>
   )
 }
 

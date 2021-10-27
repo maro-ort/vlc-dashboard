@@ -1,6 +1,6 @@
 import React, { FC, useContext } from 'react'
 
-import VlcContext from '../VlcContext'
+import VlcContext from '../context/VlcContext'
 
 const Status: FC = () => {
 

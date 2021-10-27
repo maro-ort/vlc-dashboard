@@ -1,0 +1,35 @@
+#progress {
+
+  .bar {
+    $bar-height: 2em;
+    -webkit-appearance: none;
+    background: transparent;
+    height: $bar-height;
+    width: 100%;
+    &::-webkit-slider-thumb { -webkit-appearance: none; }
+    &:focus { outline: none }
+
+    // Thumb
+    &::-webkit-slider-thumb, &::-moz-range-thumb {
+      @include transition;
+      background-color: $accent;
+      border: 1px solid $secondary;
+      border-radius: 0;
+      cursor: pointer;
+      height: $bar-height;
+      width: .5rem;
+    }
+
+    // Track
+    &::-webkit-slider-runnable-track, &::-moz-range-track {
+      @include transition;
+      background-color: $accent;
+      height: .3rem;
+      width: 100%;
+    }
+
+    &.--paused {
+      &::-webkit-slider-runnable-track, &::-moz-range-track { background-color: $primary; }
+    }
+  }
+}

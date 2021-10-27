@@ -1,32 +1,21 @@
-import React, { FC, useContext, useEffect } from 'react'
+import React, { FC, useContext } from 'react'
 
-import VlcContext from './VlcContext'
+import VlcContext from './context/VlcContext'
 
 import Browser from './components/Browser'
 import Controls from './components/Controls'
 import Playlist from './components/Playlist'
+import Progress from './components/Progress'
 import Status from './components/Status'
 
 const Layout: FC = () => {
-  const { syncStatus } = useContext(VlcContext) || {}
-
-  // Crons
-  useEffect(() => {
-    syncStatus()
-    const intervals = [
-      setInterval(syncStatus, 3000),
-    ]
-
-    return () => {
-      intervals.forEach(clearInterval)
-    }
-  }, [ syncStatus ])
-
+  const { status } = useContext(VlcContext) || {}
 
   return (
     <div id="app-wrapper">
       <Status />
-      <Controls />
+      {status && status.state !== 'off' && <Controls status={status} />}
+      {status && status.progress && <Progress state={status.state} progress={status.progress} />}
       <Playlist />
       <Browser />
     </div>

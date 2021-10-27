@@ -1,0 +1,39 @@
+#controls {
+  .buttons {
+    display: grid;
+    grid-template-areas:
+      "playlist prev next play play"
+      "full loop random play play"
+    ;
+    grid-gap: 1rem;
+
+    .controls-button {
+      @include transition;
+      align-items: center;
+      box-sizing: border-box;
+      border: 2px solid currentColor;
+      border-radius: 3px;
+      cursor: pointer;
+      display: flex;
+      font-size: 1.5em;
+      justify-content: center;
+      // height: 100%;
+      padding: .5em;
+      // width: 100%;
+
+      &:hover {
+        background-color: rgba($accent, .1);
+      }
+
+      &.play,&.pause { grid-area: play; }
+      &.backward { grid-area: prev; }
+      &.forward { grid-area: next; }
+      &.list { grid-area: playlist ; }
+      &.expand-alt { grid-area: full; }
+      &.undo-alt { grid-area: loop; }
+      &.random { grid-area: random; }
+
+      &.--active { color: $accent; }
+    }
+  }
+}

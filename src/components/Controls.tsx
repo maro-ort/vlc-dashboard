@@ -1,34 +1,79 @@
-import React, { FC, useContext, useEffect, useState } from 'react'
+import React, { FC, useContext } from 'react'
+import cx from 'classnames'
 
-import VlcContext from '../VlcContext'
+import EffectsContext from '../context/EffectsContext'
 
-const Controls: FC = () => {
-  const [ progress, setProgress ] = useState<VlcProgress>()
-  const { getProgress } = useContext(VlcContext)
+import { sendCommand } from '../utils/api'
 
-  useEffect(() => {
-    console.log(getProgress());
-    
-    setProgress(getProgress())
-    const interval = setInterval(() => setProgress(getProgress()))
-    return () => clearInterval(interval)
-  }, [ setProgress ])
+const Controls: FC<{
+  status: VlcStatus
+}> = ({
+  status: {
+    state,
+    controls
+  }
+}) => {
+  const { setIsPlaylistOpen } = useContext(EffectsContext)
+
+  const goToPlaylist = () => {
+    setIsPlaylistOpen(true)
+    document.getElementById('playlist')?.scrollIntoView()
+  }
 
   return (
     <section id="controls">
-      {progress && (
-        <div id="progress-slider">
-          {progress.position}
-          <input
-            type="range"
-            value={progress.position * 100}
-            min={0}
-            max={100}
-            onChange={() => ({})}
-          />
-        </div>
-      )}
+      <div className="buttons">
+        <ControlButton
+          fa={cx({ 'play': state !== 'playing', 'pause': state === 'playing' })}
+          onClick={() => sendCommand({ command: 'pl_pause' })}
+        />
+        <ControlButton
+          fa="backward"
+          onClick={() => sendCommand({ command: 'pl_previous' })}
+        />
+        <ControlButton
+          fa="forward"
+          onClick={() => sendCommand({ command: 'pl_next' })}
+        />
+        <ControlButton
+          fa="list"
+          onClick={goToPlaylist}
+        />
+        <ControlButton
+          fa="expand-alt" active={controls?.fullscreen}
+          onClick={() => sendCommand({ command: 'fullscreen' })}
+        />
+        <ControlButton
+          fa="undo-alt" active={controls?.loop}
+          onClick={() => sendCommand({ command: 'pl_loop' })}
+        />
+        <ControlButton
+          fa="random" active={controls?.random}
+          onClick={() => sendCommand({ command: 'pl_random' })}
+        />
+      </div>
     </section>
+  )
+}
+
+const ControlButton: FC<{
+  fa: string
+  active?: boolean
+  onClick: () => void
+}> = ({
+  fa,
+  active,
+  onClick
+}) => {
+
+  return (
+    <div
+      key={fa}
+      className={cx('controls-button', fa, { '--active': active })}
+      onClick={onClick}
+    >
+      <span className={cx(`fa fa-${fa}`)} />
+    </div>
   )
 }
 
