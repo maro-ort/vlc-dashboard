@@ -1,17 +1,17 @@
-import React, { FC, useEffect } from 'react'
+import React, { FC, useContext } from 'react'
 
-import { getStatus } from '../utils/api'
+import VlcContext from '../VlcContext'
 
 const Status: FC = () => {
 
-  useEffect(() => {
-    getStatus()
-  }, [])
-
+  const { status } = useContext(VlcContext) || {}
 
   return (
     <section id="status">
-      ass
+      {['off', 'unauthorized'].includes(status.state)
+        ? (<h1>Dead</h1>)
+        : (<h2>{status.state}</h2>)
+      }
     </section>
   )
 }

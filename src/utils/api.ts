@@ -1,23 +1,11 @@
 import { env } from './env'
 
-
-
 const getStatus = () => {
 
-  const url = `http://${env('VLC_HOST')}/requests/status.xml`
-  console.log({ url });
-
-
-  return fetch(url, {
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      "Authorization": `Basic ${env('VLC_AUTH')}`
-    }
+  return fetch(env('ULL_API'), {
+    headers: { 'Content-Type': 'application/json' }
   })
-  .then(r => r.text())
-  .then(r => {
-    console.log({ r })
-  })
+  .then(r => r.json())
 }
 
 export {

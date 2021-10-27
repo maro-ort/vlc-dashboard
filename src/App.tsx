@@ -1,19 +1,13 @@
 import React, { FC } from 'react'
+import Layout from './Layout'
 
-import Browser from './components/Browser'
-import Controls from './components/Controls'
-import Playlist from './components/Playlist'
-import Status from './components/Status'
+import { VlcProvider } from './VlcContext'
 
 const App: FC = () => {
   return (
-    <div id="app-wrapper">
-      <Status />
-      <Controls />
-      <Playlist />
-      <Browser />
-
-    </div>
+    <VlcProvider>
+      <Layout />
+    </VlcProvider>
   )
 }
 
