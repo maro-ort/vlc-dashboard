@@ -43,11 +43,12 @@ const PlaylistItem: FC<{
 }
 
 const Playlist: FC = () => {
-  const { isPlaylistOpen, setIsPlaylistOpen } = useContext(EffectsContext)
+  const { isPlaylistOpen, setIsPlaylistOpen, setIsBrowserOpen } = useContext(EffectsContext)
   const [ playlistItems, setPlaylistItems ] = useState<VlcPlaylist>([])
 
   const goToBrowser = () => {
     setIsPlaylistOpen(false)
+    setIsBrowserOpen(true)
     document.getElementById('browser')?.scrollIntoView()
   }
 

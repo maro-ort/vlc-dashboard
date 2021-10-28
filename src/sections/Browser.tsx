@@ -3,15 +3,17 @@ import cx from 'classnames'
 
 import EffectsContext from '../context/EffectsContext'
 
-import { getFolder } from '../utils/api'
+import { addToPlaylist, getFolder } from '../utils/api'
 import { shortPath } from '../utils/shortPath'
 
 import Expandable from '../components/Expandable'
 
 const Folder: FC<{
-  folder: VlcFolder
+  add: (file: VlcItem) => void
   cd: (folder: VlcItem) => void
+  folder: VlcFolder
 }> = ({
+  add,
   cd,
   folder: {
     folders,
@@ -19,10 +21,14 @@ const Folder: FC<{
   }
 }) => {
 
-
-
   return (
     <div className="folder">
+      {folders.length === 0 && files.length === 0 && (
+        <div className="empty-folder">
+          <span className="fa fa-folder" />
+          <div>Empty folder</div>
+        </div>
+      )}
       {folders.map((folder, i) => (
         <div
           key={i}
@@ -38,7 +44,7 @@ const Folder: FC<{
           className="item"
         >
           <span>{file.name}</span>
-          <span><span className="btn fa fa-plus" /></span>
+          <span onClick={() => add(file)}><span className="btn fa fa-plus" /></span>
         </div>
       ))}
     </div>
@@ -58,6 +64,14 @@ const Browser: FC = () => {
   const toggleBrowser = useCallback(() => {
     setIsBrowserOpen(!isBrowserOpen)
   }, [ isBrowserOpen, setIsBrowserOpen ])
+
+  const add = (file: VlcItem) => {
+    addToPlaylist([ currentPath + '/' + file.name ])
+  }
+
+  const addFolder = useCallback(() => {
+    addToPlaylist(folder.files.map(({ name }) => currentPath + '/' + name))
+  }, [ currentPath, folder ])
 
   const cd = useCallback((folder: VlcItem) => {
     setCurrentPath(currentPath + '/' + folder.name)
@@ -82,10 +96,14 @@ const Browser: FC = () => {
         <>
           <div className="controls">
             <span className="path">{shortPath(currentPath)}</span>
-            <span><span className="btn fa fa-plus" /></span>
+            <span onClick={addFolder}><span className="btn fa fa-plus" /></span>
             <span onClick={up}><span className="btn fa fa-level-up-alt" /></span>
           </div>
-          <Folder folder={folder} cd={cd} />
+          <Folder
+            folder={folder}
+            add={add}
+            cd={cd}
+          />
         </>
       </Expandable>
     </section>

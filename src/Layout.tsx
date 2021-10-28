@@ -14,8 +14,8 @@ const Layout: FC = () => {
   return (
     <div id="app-wrapper">
       <Status />
-      {status && status.state !== 'off' && <Controls status={status} />}
-      {status && status.progress && <Progress state={status.state} progress={status.progress} />}
+      <Controls status={status} />
+      <Progress state={status.state} progress={status?.progress} />
       <Playlist />
       <Browser />
     </div>

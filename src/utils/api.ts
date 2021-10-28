@@ -1,13 +1,23 @@
 import { env } from './env'
 
+const addToPlaylist = (uris: string[]): Promise<any> => {
+  const endpoint = `${env('ULL_API')}/add`
+  return fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ uris })
+  })
+  .then(r => r.json())
+}
+
 const getFolder = ({ dir }: { dir: string }): Promise<VlcFolder> => {
   const endpoint = `${env('ULL_API')}/browse`
-    return fetch(endpoint, {
+  return fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ dir })
     })
-      .then(r => r.json())
+    .then(r => r.json())
 }
 
 const getPlaylist = (): Promise<VlcPlaylist> => {
@@ -37,6 +47,7 @@ const sendCommand = ({ command, data = {} }: VlcSendCommand): Promise<VlcStatus>
 }
 
 export {
+  addToPlaylist,
   getFolder,
   getPlaylist,
   getStatus,

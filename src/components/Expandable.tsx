@@ -18,14 +18,14 @@ const Expandable: FC<{
     if(!elRef.current) return
     const ref = elRef.current
     const resizeObserver = new ResizeObserver(() => {
-      setMaxHeight(ref?.scrollHeight)
+      !maxHeight && setMaxHeight(ref?.scrollHeight)
     })
     setTimeout(() => resizeObserver.observe(ref), 1000)
 
     return () => {
       resizeObserver.unobserve(ref)
     }
-  }, [ elRef ])
+  }, [ elRef, maxHeight ])
 
   useEffect(() => {
     if(isExpanded) setCurrentHeight(maxHeight ||  0)

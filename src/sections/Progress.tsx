@@ -6,8 +6,11 @@ import{ sendCommand } from '../utils/api'
 
 const Progress: FC<{
   state: VlcState
-  progress: VlcProgress
-}> = ({ state, progress }) => {
+  progress?: VlcProgress
+}> = ({
+  state,
+  progress
+}) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
@@ -17,11 +20,11 @@ const Progress: FC<{
   return (
     <section id="progress">
       <div id="progress-slider">
-        {toTime(progress.time)} | {toTime(progress.length)}
+        {toTime(progress?.time || 0)} | {toTime(progress?.length || 0)}
         <input
           className={cx('bar', { '--paused': state !== 'playing' })}
           type="range"
-          value={progress.position * 100}
+          value={(progress?.position || .5) * 100}
           min={0}
           max={100}
           onChange={handleChange}
