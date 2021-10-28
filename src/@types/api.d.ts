@@ -1,7 +1,6 @@
 type VlcState = 'stopped' | 'paused' | 'playing' | 'off' | 'unauthorized'
 
-type VlcCommand = 'pl_play'
-| 'pl_pause'
+type VlcCommand = 'pl_pause'
 | 'pl_stop'
 | 'pl_next'
 | 'pl_previous'
@@ -10,7 +9,17 @@ type VlcCommand = 'pl_play'
 | 'pl_loop'
 | 'pl_repeat'
 | 'fullscreen'
-| 'pl_delete'
+
+type VlcItem = {
+  name: string
+  uri: string
+  type: 'dir' | 'file'
+}
+
+type VlcFolder = {
+  folders: VlcItem[]
+  files: VlcItem[]
+}
 
 type VlcPlaylistItem = {
   id: string
@@ -45,6 +54,12 @@ type VlcStatus = {
 type VlcSendCommand = {
   command: VlcCommand
   data?: JsonType
+} | {
+  command: 'pl_delete',
+  data: { id: string }
+} | {
+  command: 'pl_play',
+  data?: { id: string }
 } | {
   command: 'seek',
   data: { val: number | `+${number}` | `-${number}` | `${number}%` }

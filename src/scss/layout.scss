@@ -14,11 +14,13 @@ html, body {
   flex-direction: column;
   margin: auto;
   max-width: 500px;
-  padding: 0 .5rem;
+  padding: .5rem;
 
-  & > * {
-    background: rgba(black, .1);
-    margin-bottom: 1rem;
+  > section {
+    background: rgba(black, .2);
+    border-radius: 3px;
+    box-shadow: 0 0 3px 0 black;
+    margin: .5rem 0;
 
     &:last-child { margin-bottom: 0; }
   }

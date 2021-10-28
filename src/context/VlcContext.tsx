@@ -22,8 +22,8 @@ const VlcProvider: FC<{
   // Cron
   useEffect(() => {
     syncStatus()
-    const interval = setInterval(syncStatus, parseInt(env('REFRESH_RATE', (200).toString())))
-    return () => { clearInterval(interval) }
+    // const interval = setInterval(syncStatus, parseInt(env('REFRESH_RATE', (200).toString())))
+    // return () => { clearInterval(interval) }
   }, [ syncStatus ])
 
   const value = {
