@@ -2,11 +2,11 @@ import React, { FC, useContext } from 'react'
 
 import VlcContext from './context/VlcContext'
 
-import Browser from './components/Browser'
-import Controls from './components/Controls'
-import Playlist from './components/Playlist'
-import Progress from './components/Progress'
-import Status from './components/Status'
+import Browser from './sections/Browser'
+import Controls from './sections/Controls'
+import Playlist from './sections/Playlist'
+import Progress from './sections/Progress'
+import Status from './sections/Status'
 
 const Layout: FC = () => {
   const { status } = useContext(VlcContext) || {}

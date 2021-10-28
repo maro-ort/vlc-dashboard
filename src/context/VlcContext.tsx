@@ -1,6 +1,7 @@
 import React, { createContext, FC, useCallback, useEffect, useState } from 'react'
 
 import { getStatus } from '../utils/api'
+import { env } from '../utils/env'
 
 const VlcContext = createContext<{
   status: VlcStatus
@@ -21,8 +22,8 @@ const VlcProvider: FC<{
   // Cron
   useEffect(() => {
     syncStatus()
-    // const interval = setInterval(syncStatus, parseInt(env('REFRESH_RATE', REFRESH_RATE)))
-    // return () => { clearInterval(interval) }
+    const interval = setInterval(syncStatus, parseInt(env('REFRESH_RATE', (200).toString())))
+    return () => { clearInterval(interval) }
   }, [ syncStatus ])
 
   const value = {

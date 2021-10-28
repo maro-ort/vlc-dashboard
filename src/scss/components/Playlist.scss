@@ -1,9 +1,59 @@
 #playlist {
   // height: 3rem;
 
+  .btn {
+    @include transition;
+    border: 1px solid $primary;
+    border-radius: 3px;
+    cursor: pointer;
+    line-height: 1em;
+    font-size: 1.5em;
+    margin-left: .5em;
+    padding: .3em;
+    width: 1em;
+
+    &:hover {
+      border-color: $accent;
+      color: $accent;
+    }
+  }
+
+  .controls {
+    border-bottom: 1px solid rgba($primary, .2);
+    display: flex;
+    justify-content: flex-end;
+    padding: .5em;
+  }
+
   .list {
+    display: flex;
+    flex-direction: column-reverse;
     .list-item {
+      @include transition;
+      align-items: center;
+      cursor: pointer;
+      display: flex;
+      justify-content: flex-end;
       padding: .5em;
+
+      &:hover {
+        background-color: rgba($primary, .1);
+        
+        &.--playing {
+          background-color: rgba($accent, .1);
+        }
+      }
+
+      &.--playing {
+        > :first-child {
+          color: $accent;
+        }
+      }
+
+      > :first-child {
+        flex-grow: 1;
+      }
+
     }
   }
 }

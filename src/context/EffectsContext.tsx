@@ -1,4 +1,4 @@
-import React, { createContext, FC, useCallback, useEffect, useState } from 'react'
+import React, { createContext, FC, useState } from 'react'
 
 const EffectsContext = createContext<{
   isPlaylistOpen: boolean
